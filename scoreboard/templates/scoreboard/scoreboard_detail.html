@@ -1,0 +1,54 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    Scoreboard - {{object.name}}
+{%endblock%}
+
+{%block content%}
+    <div class="detail-scoreboard">
+        <b><h1>{{object.name}}</h1></b>
+        <h4>Description:</h4>
+        <p>{{object.description}}</p>
+        <h4>Scoreboard itself:</h4>
+        <h5>--Under Construction--</h5>
+        <table id = "t01" style="width:100%">
+            <tr>
+                <th>Contestant</th>
+                {% for col in object.columns.all %}
+                    <th>{{col.header}}</th>
+                {%endfor%}
+            </tr>
+            {%for stu in object.student.all%}
+                <tr>
+                    <td>{{stu.name}}</td>
+                    {% for po in stu.points.all %}
+                        <td>{{po.numerator}}/{{po.denominator}}</td>
+                    {%endfor%}
+                </tr>
+            {%endfor%}
+        </table> 
+        <br>
+        <br>
+        <h4>All participants:</h4>
+        <ul>
+            {%for stu in object.student.all%}
+                <li>{{stu.name}}</li>
+            {%endfor%}
+        </ul>
+    </div>
+    <div>
+        {% buttons %}
+            <a href="/scoreboard/{{object.id}}/edit">
+                <button type="submit" class="btn btn-primary" id = "editscore">
+                    Edit  {% bootstrap_icon "log-in" %} 
+                </button>
+            </a>
+        {% endbuttons %}
+    </div>
+{%endblock%}

@@ -1,0 +1,16 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    404 Not Found
+{%endblock%}
+
+{%block content%}
+    <h1>404 Not found</h1>
+    <p>Sorry, the scoreboard you are looking for is not available or has been deleted.</p>
+{%endblock%}

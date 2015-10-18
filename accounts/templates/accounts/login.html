@@ -1,0 +1,33 @@
+{% extends 'accounts/base.html' %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    Login
+{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1>Login</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <br />
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Submit  {% bootstrap_icon "log-in" %} 
+                </button>
+                <a href="https://finalproject-jianzhi-1.c9.io/accounts/register/" class="btn btn-info" role="button">Register</a>
+            {% endbuttons %}
+            </form>
+          
+        </div>
+      </div>
+    </div>
+{% endblock %}

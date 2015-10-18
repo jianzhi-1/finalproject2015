@@ -1,0 +1,141 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+{% load crispy_forms_tags %}
+
+<head>
+  <title>
+    {%block title%}
+	      SCORE!
+    {%endblock%}
+  </title>
+</head>
+
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery=1%}
+
+<link rel="icon" href="/media/images/logo.png">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript">
+
+</script>
+
+
+{%load staticfiles%}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}" />
+
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    
+    <div class="navbar-collapse collapse">
+      <!--
+      <ul class="nav navbar-nav">
+        <li><a href=""></a></li>
+      </ul>
+      -->
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" class="dropdown">
+          <!--
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+            {%if user.is_authenticated%}
+              <img src="/media/{{curruser.picture}}" height="30px" />
+              Hi {{user.username}}!
+            {%else%}
+              Login here!
+            {%endif%}
+            <span class="caret"></span>
+          </a>
+          -->
+          
+          <!--
+          <ul class="dropdown-menu">
+            {%if user.is_authenticated%}
+              <li><a href="/accounts/logout">Logout</a></li>
+            {%else%}
+              <li><a href="/accounts/login">Login</a></li>
+              <li><a href="/accounts/register">Register</a></li>
+            {%endif%}
+          </ul>
+          -->
+          
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+  
+</div>
+    
+    
+<!-- CONTROL BAR i.e. the left most bar -->
+<div id = "control">
+  <!-- LOGO -->
+  <a class="navbar-brand" href="/">
+    <img class="logo" src="/media/images/logo.png" alt="SCORE!">
+  </a>
+  <!-- Words that go with LOGO -->
+  <div id = "logo-accom">
+    <i><b>sCORE!</b></i>
+  </div>
+  
+  <!-- Welcome User -->
+  <div id = "welcome-user">
+    <b style="color:white">Welcome, Guest!</b>
+  </div>
+  
+  <!-- Sign Up -->
+  <div id = "signup">
+    <img class="pointer" src="/media/images/finger.png" alt="pointer">
+    <b style="color:white">Sign Up</b>
+  </div>
+  
+  <!-- Spectator Stand: for public who are observing the scoreboards (not allowed to edit -->
+  <div id = "spectator">
+    <img class="pointer" src="/media/images/finger.png" alt="pointer">
+    <b style="color:white">Spectator</b>
+  </div>
+  
+</div>
+
+
+<!--
+<div id = "navigation">
+
+
+    <hr>
+    <h4>A place where you can <b>display</b>, <b>account</b> and <b>check your items</b>. Sign up for Free!</h4>
+    <ul>
+        
+    
+    </ul>
+
+    <h3><b>Stores</b></h3>
+    <ul>
+        <p>Welcome to <b>SCORE!</b></p>
+    
+    </ul>
+</div>
+-->
+
+<body>
+{%block content%}
+	To be replaced by actual content
+{%endblock%}
+</body>

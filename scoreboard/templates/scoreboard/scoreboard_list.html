@@ -1,0 +1,23 @@
+{% extends 'scoreboard/base.html'%}
+{%block title%}
+    {{user.username}}
+{%endblock%}
+{%load staticfiles%}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'scoreboard/style.css' %}" />
+    {% if scoreboard_list %}
+        {% for scoreboard in scoreboard_list  %}
+            <a href = "/scoreboard/{{scoreboard.id}}">
+                <div class = "postit" style = "background:{{scoreboard.color}};color:{{scoreboard.fontcolor}}">
+                    <u>{{scoreboard.name}}</u>
+                    <br>
+                    <u>Top three contestants:</u>
+                    <br>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>Add a scoreboard! :)</p>
+    {% endif %}
+        
+{%endblock%}
