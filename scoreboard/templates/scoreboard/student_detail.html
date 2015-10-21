@@ -1,0 +1,65 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    Participant - {{object.name}}
+{%endblock%}
+
+{%block content%}
+    <div class="detail-scoreboard">
+        <h1>{{object.name}}</h1>
+        <table class = "sortable" id = "t01" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Ranking</th>
+                    <th>Contestant</th>
+                    {% for sco in object.score.all %}
+                        <th>{{sco.column.header}}</th>
+                    {%endfor%}
+                    <th>Overall</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class = "Rank">1</td>
+                    <td>{{object.name}}</td>
+                    <script>
+                        weighted(-1, -1, -1);
+                    </script>
+                    {% for sco in object.score.all %}
+                        <script>
+                            weighted({{sco.numerator}}, {{sco.denominator}}, {{sco.column.weight}});
+                        </script>
+                        <td class = "Cell" bgcolor="#00CC00">{{sco.numerator}}/{{sco.denominator}}</td>
+                        <script>
+                            headFunction({{sco.numerator}}, {{sco.denominator}});
+                        </script>
+                    {%endfor%}
+                    <td class = "weight"></td>
+                    <script>
+                      weighted(-2, -2, -2);
+                    </script>
+                </tr>
+            </tbody>
+        </table> 
+    </div>
+    <div id = "editdelete">
+        {% buttons %}
+            <a href="/participants/{{object.id}}/edit">
+                <button type="submit" class="btn btn-primary">
+                    Edit  {% bootstrap_icon "log-in" %} 
+                </button>
+            </a>
+            <a href="/participants/{{object.id}}/delete">
+                <button type="submit" class="btn btn-primary" style = "background-color:red; border-color:red">
+                    Delete  {% bootstrap_icon "log-in" %} 
+                </button>
+            </a>
+        {% endbuttons %}
+    </div>
+{%endblock%}

@@ -79,11 +79,10 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
     float:left;
     padding:20px;	
 }
-
-.container {
-    padding-left:275px;
+.acontainer {
+	margin-top: -10px;
+	padding-left: 50px;
 }
-
 /*Navigation Bar i.e. the one at the top*/
 .navbar {
   position: fixed;
@@ -191,9 +190,10 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 	margin-top:-150px;
 }
 
-#editscore {
-	margin-left:1150px;
-	margin-top:-250px;
+#editdelete {
+	position: absolute;
+	top:16%;
+	left:82%;
 }
 
 .update_score {
@@ -221,4 +221,19 @@ table#t01 tr:nth-child(odd) {
 table#t01 th	{
     background-color: black;
     color: white;
+}
+
+#creation {
+	margin-top:60px;
+	margin-left:120px;
+	width:190%;
+}
+
+.delete-container {
+	margin-left:230px;
+	margin-top:120px;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
 }

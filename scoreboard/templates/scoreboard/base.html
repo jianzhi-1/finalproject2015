@@ -9,13 +9,103 @@
 	      SCORE!
     {%endblock%}
   </title>
-</head>
+  <script type='text/javascript'>
+      function redirect(x) {
+          var input = document.getElementById('userInput').value;
+          switch(input) {
+              case 'average':
+                  window.location.replace(window.location.href + '/average.html');
+                  break;
+              case 'total':
+                  window.location.replace(window.location.href + '/total.html');
+                  break;
+              default:
+                  window.location.replace(window.location.href + '/' + input);
+                  break;
+          }
+      }
+  </script>
+  
+  <script>
+    function myFunction() {
+        var x = document.getElementsByClassName("Rank");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].innerHTML = i + 1
+            if (i + 1 == 1){
+              x[i].style.backgroundColor = "gold";
+            } else if (i + 1 == 2){
+              x[i].style.backgroundColor = "silver";
+            } else if (i + 1 == 3){
+              x[i].style.backgroundColor = "#663300";
+            }
+        }
+    }
+  </script>
+  
+  <script>
+    var store = 0.0;
+    var i = 0;
+    console.log("hello");
+    function weighted(x, y, z){
+      if (x == -1 && y == -1){
+        store = 0;
+      } else if (x == -2 && y == -2){
+        var t = document.getElementsByClassName("weight");
+        for (i = 0; i < t.length; i++){
+          if (t[i].innerHTML != "") continue;
+          t[i].innerHTML = store.toString();
+          break;
+        }
+      } else {
+        store += (x/y)*z;
+      }
+      console.log(store);
+    }
+  </script>
+  
+  <script>
+  function headFunction(x,y) {
+      var t = document.getElementsByClassName("Cell");
+      var i;
+      var x1 = parseFloat(x);
+      var y1 = parseFloat(y);
+      if (x1>=y1){
+        t[t.length - 1].style.backgroundColor = "#088A08";
+      } else if (x1>=y1*0.90) {
+        t[t.length - 1].style.backgroundColor = "#01DF01";
+      } else if (x1 >= y1*0.80){
+        t[t.length - 1].style.backgroundColor = "#3ADF00";
+      } else if (x1 >= y1*0.70){
+        t[t.length - 1].style.backgroundColor = "#74DF00";
+      } else if (x1 >= y1*0.60){
+        t[t.length - 1].style.backgroundColor = "#A5DF00";
+      } else if (x1 >= y1*0.50){
+        t[t.length - 1].style.backgroundColor = "#D7DF01";
+      } else if (x1 >= y1*0.40){
+        t[t.length - 1].style.backgroundColor = "#DBA901";
+      } else if (x1 >= y1*0.30){
+        t[t.length - 1].style.backgroundColor = "#DF7401";
+      } else if (x1 >= y1*0.20){
+        t[t.length - 1].style.backgroundColor = "#DF3A01";
+      } else if (x1 >= y1*0.10){
+        t[t.length - 1].style.backgroundColor = "#DF0101";
+      }  else if(x1 >= 0){
+        t[t.length - 1].style.backgroundColor = "#B40404";
+      }
+      
+  }
+  </script>
 
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery=1%}
 
+{%load staticfiles%}
+<link rel="stylesheet" type="text/css" href="{% static 'scoreboard/style.css' %}" />
+
+<script src="{% static 'scoreboard/sorttable.js' %}"></script> 
 <link rel="icon" href="/media/images/logo.png">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -26,12 +116,197 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
-
+    $(document).ready(function() {
+        jQuery.ajaxSettings.traditional = true; //Important 
+        
+        /*Important functions to enable CSRF token as Django requires it*/
+        function getCookie(name) {
+            var cookieValue = null;
+            var i = 0;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (i; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+    
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        /*end CSRF token */
+    
+        /*Setting the format of the datepicker and datetimepicker*/
+        $('.dateinput').datepicker({
+            format: "yyyy/mm/dd"
+        });
+        $('.datetimeinput').datetimepicker({
+            format: "YYYY-MM-DD HH:mm"
+        });
+        
+        $('.createcolumn').click(function(e) {
+            formid = $(this).parent().attr("id"); //find the formid of the button pressed via parent 
+            
+            $.ajax({
+                type: "POST",
+                url: "/add/",
+                dataType: "json",
+                data: {
+                    "header": $("#" + formid + " #id_header").val(),
+                    "color": $("#" + formid + " #id_color").val(),
+                    "fontcolor": $("#" + formid + " #id_fontcolor").val(),
+                    "form": $("#" + formid).serialize(),
+    
+                },
+                success: function(data, status) {
+                    //Populate the dropdown list with all the folders returned in json
+                    var $el = $("#id_column");
+                    $el.empty(); // remove old options
+                    $.each(data, function(key, value) {
+                        $el.append($("<option></option>").attr("value", value.id).text(value.header));
+                    });
+                },
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        });
+        
+        $('#button-id-btn_createscore').click(function(e) {
+            
+            formid = $(this).parent().attr("id"); //find the formid of the button pressed via parent 
+            
+            $.ajax({
+                type: "POST",
+                url: "/add/",
+                dataType: "json",
+                data: {
+                    "numerator": $("#" + formid + " #id_numerator").val(),
+                    "denominator": $("#" + formid + " #id_denominator").val(),
+                    "column": $("#" + formid + " #id_column").val(),
+                    "form": $("#" + formid).serialize(),
+                },
+                success: function(data, status) {
+                    //Populate the dropdown list with all the folders returned in json
+                    var $el = $("#id_score");
+                    $el.empty(); // remove old options
+                    $.each(data, function(key, value) {
+                        $el.append($("<option></option>").attr("value", value.id).text(value.numerator + "/" + value.denominator + " " + value.column));
+                    });
+                    // $el.append($("<option></option>").attr("value", "").text("---------"));
+                    // $.each(data, function(key, value) {
+                    //     $el.append($("<option></option>").attr("value", value.id).text(value.title));
+                    // });
+                },
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        });
+    
+       
+        $('#button-id-btn_createstudent').click(function(e) {
+            
+            formid = $(this).parent().attr("id"); //find the formid of the button pressed via parent 
+            
+            $.ajax({
+                type: "POST",
+                url: "/add/",
+                dataType: "json",
+                data: {
+                    "name": $("#" + formid + " #id_name").val(),
+                    "points": $("#" + formid + " #id_score").val(),
+                    "form": $("#" + formid).serialize(),
+    
+                },
+                success: function(data, status) {
+                    //Populate the dropdown list with all the folders returned in json
+                    var $el = $("#id_student");
+                    $el.empty(); // remove old options
+                    $.each(data, function(key, value) {
+                        $el.append($("<option></option>").attr("value", value.id).text(value.name));
+                    });
+                    // $el.append($("<option></option>").attr("value", "").text("---------"));
+                    // $.each(data, function(key, value) {
+                    //     $el.append($("<option></option>").attr("value", value.id).text(value.title));
+                    // });
+                },
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        });
+        
+        
+        $('#button-id-btn_createscoreboard').click(function(e) {
+            
+            formid = $(this).parent().attr("id"); //find the formid of the button pressed via parent 
+    
+            $.ajax({
+                type: "POST",
+                url: "/add/",
+                dataType: "json",
+                data: {
+                    "name": $("#" + formid + " #id_name").val(),
+                    "sid": $("#" + formid + " #id_sid").val(),
+                    "description": $("#" + formid + " #id_description").val(),
+                    "color": $("#" + formid + " #id_color").val(),
+                    "fontcolor": $("#" + formid + " #id_fontcolor").val(),
+                    "student": $("#" + formid + " #id_student").val(),
+                    "column": $("#" + formid + " #id_column").val(),
+                    "form": $("#" + formid).serialize(),
+    
+                },
+                
+                success: function(data) {
+                    if (data.status == 1){
+                        window.location.replace("finalproject-jianzhi-1.c9.io/list"); //to redirect to another page
+                    }
+                },
+                
+                
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        });
+        
+        /* To reset the modal input fields when modal is closed.*/
+        $('#myModal').on('hidden.bs.modal', function(){
+            $(this).find('form')[0].reset();
+        });
+        /* To reset the modal input fields when modal is closed.*/
+        $('#myModal2').on('hidden.bs.modal', function(){
+            $(this).find('form')[0].reset();
+        });
+        /* To reset the modal input fields when modal is closed.*/
+        $('#myModal3').on('hidden.bs.modal', function(){
+            $(this).find('form')[0].reset();
+        });
+    });
 </script>
+</head>
 
-
-{%load staticfiles%}
-<link rel="stylesheet" type="text/css" href="{% static 'scoreboard/style.css' %}" />
 
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
@@ -65,7 +340,8 @@
           
           <ul class="dropdown-menu">
             {%if user.is_authenticated%}
-              <li><a href="/">Create a Scoreboard</a></li>
+              <li><a href="/add">Create a Scoreboard</a></li>
+              <li><a href="/accounts/profile">View Profile</a></li>
               <li><a href="/accounts/logout">Logout</a></li>
             {%else%}
               <li><a href="/accounts/login">Login</a></li>
@@ -125,7 +401,7 @@
 
   <div id = "signup">
       {%if user.is_authenticated%}
-        <a href="/">
+        <a href="/add">
           <img class="pointer" src="/media/images/finger.png" alt="pointer">
           <b style="color:white">Create a Scoreboard</b>
         </a>
@@ -148,27 +424,7 @@
   
 </div>
 
-
-<!--
-<div id = "navigation">
-
-
-    <hr>
-    <h4>A place where you can <b>display</b>, <b>account</b> and <b>check your items</b>. Sign up for Free!</h4>
-    <ul>
-        
-    
-    </ul>
-
-    <h3><b>Stores</b></h3>
-    <ul>
-        <p>Welcome to <b>SCORE!</b></p>
-    
-    </ul>
-</div>
--->
-
-<body>
+<body onload='myFunction()'>
 {%block content%}
 	To be replaced by actual content
 {%endblock%}

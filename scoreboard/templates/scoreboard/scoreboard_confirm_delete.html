@@ -1,0 +1,28 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{%load staticfiles%}
+<link rel="stylesheet" type="text/css" href="{% static 'scoreboard/style.css' %}" />
+
+{%block title%}
+    Delete {{object.name}}
+{%endblock%}
+
+{%block content%}
+
+<div class = "delete-container">
+<h1>Delete Scoreboard</h1>
+
+<p>Are you sure you want to delete the scoreboard "{{ object }}" ?</p>
+
+<form method="POST">{% csrf_token %}
+    <input type="submit" value="Submit" />
+</form>
+
+</div>
+
+{%endblock%}

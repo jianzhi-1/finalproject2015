@@ -1,0 +1,27 @@
+{%extends 'accounts/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{%block title%}
+    Profile - Scoreboard
+{%endblock%}
+{%block content%}
+    <div class="container main">
+      <div class="row">
+        <div class="col-md-6">
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {%if user_form%}
+                {% bootstrap_form user_form %}
+            {%endif%}
+            {%if profile_form%}
+              {% bootstrap_form profile_form %}
+            {%endif%}
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+{%endblock%}

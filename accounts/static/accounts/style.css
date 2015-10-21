@@ -79,7 +79,9 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 }
 
 .container {
-    padding-left:275px;
+    padding-left:275px; 
+    /*margin-top:300px;
+    margin-left:1000px;*/
 }
 
 /*Navigation Bar i.e. the one at the top*/
@@ -165,12 +167,12 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 }
 
 /*Login and Register CSS*/
-.container {
-	padding-top:50px;
+.main1.container {
+		padding-top:20px;
     padding-left:200px;
 }
 
 .containerregi {
-	padding-top:50px;
-    padding-left:260px;
+		padding-top:20px;
+    padding-left:200px;
 }

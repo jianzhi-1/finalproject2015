@@ -9,6 +9,7 @@ class Column(models.Model):
     header = models.CharField(max_length = 255)
     color = models.CharField(max_length=50, default = "yellow")
     fontcolor = models.CharField(max_length=50, default = "black")
+    weight = models.FloatField(null = True, blank = True)
     
     def __unicode__(self):
         return self.header
@@ -23,7 +24,7 @@ class Scoreboard(models.Model):
     
     #other relationships
     student = models.ManyToManyField('Student', related_name="scoreboard", null=True, blank=True)
-    columns = models.ManyToManyField('Column', related_name="scoreboard", null = True, blank = True)
+    column = models.ManyToManyField('Column', related_name="scoreboard", null = True, blank = True)
     
     def __unicode__(self):
         return self.name
@@ -31,17 +32,20 @@ class Scoreboard(models.Model):
     def get_absolute_url(self):
         return reverse("scoreboard_detail", kwargs={"pk":self.pk})
 
-
 class Score(models.Model):
     
-    numerator = models.CharField(max_length = 10)
-    denominator = models.CharField(max_length = 10)
+    numerator = models.IntegerField()
+    denominator = models.IntegerField()
     column = models.ForeignKey(Column, blank=True, null=True)
     
+    def __unicode__(self):
+        return str(self.numerator) + "/" + str(self.denominator) + " " +  str(self.column.header)
+
+
 class Student(models.Model):
     
     name = models.CharField(max_length = 255)
-    points = models.ForeignKey(Score, blank=True, null=True)
+    score = models.ManyToManyField('Score', related_name="student", null=True, blank=True)
     
     def __unicode__(self):
         return self.name

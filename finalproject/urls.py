@@ -13,13 +13,20 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     
-    url(r'^$', views.home, name = 'home'),
+    url(r'^$', views.home.as_view(), name = 'home'),
     url(r'^list/', views.ScoreboardList.as_view(context_object_name="scoreboard_list"), name = "scoreboard_list"),
     url(r'^scoreboard/(?P<pk>\d+)$', views.ScoreboardDetail.as_view(), name = 'scoreboard_detail'),
     url(r'^scoreboard/(?P<pk>\d+)/edit/$', views.ScoreboardUpdate.as_view(), name = 'scoreboard_update'),
-    url(r'^spectator/', views.spectator, name = 'spectator'),
+    url(r'^participants/(?P<pk>\d+)$', views.StudentDetail.as_view(), name = 'student_detail'),
+    url(r'^participants/(?P<pk>\d+)/edit/$', views.StudentUpdate.as_view(), name = 'student_update'),
+    url(r'^spectator/', views.ScoreboardSpectator.as_view(), name = 'spectator'),
+    url(r'^scoreboard/(?P<pk>\d+)/delete$', views.ScoreboardDelete.as_view(), name = 'scoreboard_delete'),
+    
+    #url(r'^scoreboard/(?P<pk>\d+)/(?P<anystring>.+)/$', views.ScoreboardDetail.as_view(), name = 'scoreboard_detail_withconditions'),
     
     url(r'^accounts/', include('accounts.urls')),
+    
+    url(r'^add/$', views.MyView.as_view(), name = "scoreboard_add"),
     
     
     url(r'^notfound/', views.notfound, name = 'notfound'),

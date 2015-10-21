@@ -11,7 +11,21 @@
                 <div class = "postit" style = "background:{{scoreboard.color}};color:{{scoreboard.fontcolor}}">
                     <u>{{scoreboard.name}}</u>
                     <br>
-                    <u>Top three contestants:</u>
+                    <br>
+                    <table style = "width:30%">
+                        <thead>
+                            <tr>
+                                <td><b>Contestants</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in scoreboard.student.all %}
+                                <tr>
+                                    <td>{{i.name}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                     <br>
                 </div>
             </a>

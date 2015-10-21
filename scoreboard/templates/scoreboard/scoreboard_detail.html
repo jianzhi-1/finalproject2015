@@ -1,6 +1,7 @@
 {%extends 'scoreboard/base.html'%}
 {# Load the tag library #}
 {% load bootstrap3 %}
+{%load staticfiles%}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -16,37 +17,84 @@
         <h4>Description:</h4>
         <p>{{object.description}}</p>
         <h4>Scoreboard itself:</h4>
-        <h5>--Under Construction--</h5>
-        <table id = "t01" style="width:100%">
-            <tr>
-                <th>Contestant</th>
-                {% for col in object.columns.all %}
-                    <th>{{col.header}}</th>
-                {%endfor%}
-            </tr>
-            {%for stu in object.student.all%}
+        
+        
+        
+        <table class = "sortable" id = "t01" style="width:100%">
+            <thead>
                 <tr>
-                    <td>{{stu.name}}</td>
-                    {% for po in stu.points.all %}
-                        <td>{{po.numerator}}/{{po.denominator}}</td>
+                    <th>Ranking</th>
+                    <th>Contestant</th>
+                    {% for col in object.column.all %}
+                        <th>{{col.header}}</th>
                     {%endfor%}
+                    <th>Overall</th>
                 </tr>
-            {%endfor%}
+            </thead>
+            <tbody>
+                {%for stu in object.student.all%}
+                    <tr>
+                        <td class = "Rank">1</td>
+                        <td>{{stu.name}}</td>
+                        <script>
+                          weighted(-1, -1, -1);
+                        </script>
+                        {% for col in object.column.all %}
+                            {% for po in stu.score.all %}
+                                {% if po.column == col %}
+                                    <script>
+                                      weighted({{po.numerator}}, {{po.denominator}}, {{col.weight}});
+                                    </script>
+                                    <td class = "Cell" bgcolor="#00CC00">{{po.numerator}}/{{po.denominator}}</td>
+                                    <script>
+                                      headFunction({{po.numerator}}, {{po.denominator}});
+                                    </script>
+                                {%endif%}
+                            {%endfor%}
+                        {%endfor%}
+                        <td class = "weight"></td>
+                        <script>
+                          weighted(-2, -2, -2);
+                        </script>
+                    </tr>
+                {%endfor%}
+            </tbody>
         </table> 
         <br>
         <br>
+        <!--
+        <h4>Ranking Method</h4>
+        
+        <form id='formName' name='formName' onsubmit= 'redirect({{object.id}}); return false;'>
+            <input type='text' id='userInput' name='userInput' value=''>
+                <input type='submit' name='submit' value='Submit'>
+        </form>
+        -->
+        
         <h4>All participants:</h4>
         <ul>
             {%for stu in object.student.all%}
                 <li>{{stu.name}}</li>
             {%endfor%}
         </ul>
+        
+        <h4>All Columns</h4>
+        <ul>
+            {%for col in object.column.all%}
+                <li>{{col.header}}</li>
+            {%endfor%}
+        </ul>
     </div>
-    <div>
+    <div id = "editdelete">
         {% buttons %}
             <a href="/scoreboard/{{object.id}}/edit">
-                <button type="submit" class="btn btn-primary" id = "editscore">
+                <button type="submit" class="btn btn-primary">
                     Edit  {% bootstrap_icon "log-in" %} 
+                </button>
+            </a>
+            <a href="/scoreboard/{{object.id}}/delete">
+                <button type="submit" class="btn btn-primary" style = "background-color:red; border-color:red">
+                    Delete  {% bootstrap_icon "log-in" %} 
                 </button>
             </a>
         {% endbuttons %}
