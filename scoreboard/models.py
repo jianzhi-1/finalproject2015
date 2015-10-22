@@ -17,8 +17,8 @@ class Column(models.Model):
 
 class Scoreboard(models.Model):
     user = models.ForeignKey(UserProfile, blank=True, null=True)
-    sid = models.IntegerField()
     name = models.CharField(max_length = 255)
+    sid = models.IntegerField(blank = True, null = True)
     description = models.TextField()
     color = models.CharField(max_length=50, default = "yellow")
     fontcolor = models.CharField(max_length=50, default = "black")
