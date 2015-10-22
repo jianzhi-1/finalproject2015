@@ -29,16 +29,19 @@
   <script>
     function myFunction() {
         var t = document.getElementsByTagName("table");
+        console.log("Function RUnned");
         for (var y=0; y<t.length; y++){
           var x = t[y].getElementsByClassName("Rank");
           for (var i = 0; i < x.length; i++) {
             x[i].innerHTML = i + 1;
-            if (i + 1 == 1){
+            if (i == 0){
               x[i].style.backgroundColor = "gold";
-            } else if (i + 1 == 2){
+            } else if (i == 1){
               x[i].style.backgroundColor = "silver";
-            } else if (i + 1 == 3){
+            } else if (i == 2){
               x[i].style.backgroundColor = "#663300";
+            } else {
+              x[i].style.backgroundColor = "transparent";
             }
           }
         }
@@ -67,6 +70,15 @@
         store += (x/y)*z;
       }
       console.log(store);
+    }
+  </script>
+  
+  <script type="text/javascript">
+    function searcher(){
+        var input = document.getElementById("searchTxt");
+        console.log("searched");
+        window.location = "https://finalproject-jianzhi-1.c9.io/search/" + input.value;
+        console.log("searched 2");
     }
   </script>
   
@@ -170,6 +182,8 @@
                     "header": $("#" + formid + " #id_header").val(),
                     "color": $("#" + formid + " #id_color").val(),
                     "fontcolor": $("#" + formid + " #id_fontcolor").val(),
+                    "weight": $("#" + formid + "id_weight").val(),
+                    "denominator": $("#" + formid + " #id_denominator").val(),
                     "form": $("#" + formid).serialize(),
     
                 },
@@ -200,7 +214,6 @@
                 dataType: "json",
                 data: {
                     "numerator": $("#" + formid + " #id_numerator").val(),
-                    "denominator": $("#" + formid + " #id_denominator").val(),
                     "column": $("#" + formid + " #id_column").val(),
                     "form": $("#" + formid).serialize(),
                 },
@@ -209,7 +222,7 @@
                     var $el = $("#id_score");
                     $el.empty(); // remove old options
                     $.each(data, function(key, value) {
-                        $el.append($("<option></option>").attr("value", value.id).text(value.numerator + "/" + value.denominator + " " + value.column));
+                        $el.append($("<option></option>").attr("value", value.id).text(value.numerator + " " + value.column));
                     });
                     // $el.append($("<option></option>").attr("value", "").text("---------"));
                     // $.each(data, function(key, value) {
@@ -236,7 +249,7 @@
                 dataType: "json",
                 data: {
                     "name": $("#" + formid + " #id_name").val(),
-                    "points": $("#" + formid + " #id_score").val(),
+                    "score": $("#" + formid + " #id_score").val(),
                     "form": $("#" + formid).serialize(),
     
                 },
@@ -422,6 +435,14 @@
         </a>
       {%endif%}
   </div>
+  <hr>
+  
+  <a href="/search/">
+    <div id = "spectator">
+      <img class="pointer" src="/media/images/finger.png" alt="pointer">
+      <b style="color:white">Search Scoreboard</b>
+    </div>
+  </a>
   <hr>
   
   <!-- Spectator Stand: for public who are observing the scoreboards (not allowed to edit -->

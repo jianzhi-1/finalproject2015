@@ -32,11 +32,11 @@
                     </script>
                     {% for sco in object.score.all %}
                         <script>
-                            weighted({{sco.numerator}}, {{sco.denominator}}, {{sco.column.weight}});
+                            weighted({{sco.numerator}}, {{sco.column.denominator}}, {{sco.column.weight}});
                         </script>
-                        <td class = "Cell" bgcolor="#00CC00">{{sco.numerator}}/{{sco.denominator}}</td>
+                        <td class = "Cell" bgcolor="#00CC00">{{sco.numerator}}/{{sco.column.denominator}}</td>
                         <script>
-                            headFunction({{sco.numerator}}, {{sco.denominator}});
+                            headFunction({{sco.numerator}}, {{sco.column.denominator}});
                         </script>
                     {%endfor%}
                     <td class = "weight"></td>

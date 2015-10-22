@@ -164,6 +164,19 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 	margin-left:20px;
 }
 
+table.sortable tbody {
+    counter-reset: sortabletablescope;
+}
+table.sortable thead tr::before {
+    content: "";
+    display: table-cell;
+}
+table.sortable tbody tr::before {
+    content: counter(sortabletablescope);
+    counter-increment: sortabletablescope;
+    display: table-cell;
+}
+
 .pointer {
 	height:20px;
 	width:20px;

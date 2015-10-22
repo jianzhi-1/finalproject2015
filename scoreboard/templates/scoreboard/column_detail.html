@@ -1,0 +1,31 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    Participant - {{object.name}}
+{%endblock%}
+
+{%block content%}
+    <div class="detail-scoreboard">
+        <h1>{{object.header}}</h1>
+    </div>
+    <div id = "editdelete">
+        {% buttons %}
+            <a href="/participants/{{object.id}}/edit">
+                <button type="submit" class="btn btn-primary">
+                    Edit  {% bootstrap_icon "log-in" %} 
+                </button>
+            </a>
+            <a href="/participants/{{object.id}}/delete">
+                <button type="submit" class="btn btn-primary" style = "background-color:red; border-color:red">
+                    Delete  {% bootstrap_icon "log-in" %} 
+                </button>
+            </a>
+        {% endbuttons %}
+    </div>
+{%endblock%}

@@ -35,11 +35,11 @@
                                         {% for po in stu.score.all %}
                                             {% if po.column == col %}
                                                 <script>
-                                                  weighted({{po.numerator}}, {{po.denominator}}, {{col.weight}});
+                                                  weighted({{po.numerator}}, {{col.denominator}}, {{col.weight}});
                                                 </script>
-                                                <td class = "Cell" bgcolor="#00CC00">{{po.numerator}}/{{po.denominator}}</td>
+                                                <td class = "Cell" bgcolor="#00CC00">{{po.numerator}}/{{col.denominator}}</td>
                                                 <script>
-                                                  headFunction({{po.numerator}}, {{po.denominator}});
+                                                  headFunction({{po.numerator}}, {{col.denominator}});
                                                 </script>
                                             {%endif%}
                                         {%endfor%}

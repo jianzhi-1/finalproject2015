@@ -63,7 +63,6 @@ class ColumnForm(forms.ModelForm):
         super(ColumnForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_id = "columnform"
-        
         self.helper.layout.append(Hidden(name='btn_createcolumn', value="btn_createcolumn"))
         self.helper.layout.append(Button('btn_createcolumn', 'Create Column', css_class='createcolumn', data_dismiss="modal"))
         
@@ -112,4 +111,15 @@ class StudentFormUpdate(forms.ModelForm):
         score = Div('score',css_class = "col-xs-12", style="padding:0px;") 
         self.helper.layout.pop(1)
         self.helper.layout.insert(1, Fieldset("Select Score",score, Button("createscoremodal", value="Add a New Score", css_class="btn btn-primary btn-sm col-xs-12", data_toggle="modal", data_target="#myModal")))
-        self.helper.add_input(Submit('submit', 'Update'))        
+        self.helper.add_input(Submit('submit', 'Update'))
+
+class ColumnFormUpdate(forms.ModelForm):
+    class Meta:
+        model = Column
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super(ColumnFormUpdate, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = "columnformupdate"
+        self.helper.add_input(Submit('submit', 'Update'))

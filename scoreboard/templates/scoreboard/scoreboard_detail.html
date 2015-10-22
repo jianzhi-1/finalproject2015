@@ -18,17 +18,15 @@
         <p>{{object.description}}</p>
         <h4>Scoreboard itself:</h4>
         
-        
-        
         <table class = "sortable" id = "t01" style="width:100%">
-            <thead>
-                <tr>
-                    <th class="sorttable_nosort">Ranking</th>
-                    <th>Contestant</th>
+            <thead onclick="myFunction()">
+                <tr onclick="myFunction()">
+                    <th onclick="myFunction()">Ranking</th>
+                    <th onclick="myFunction()">Contestant</th>
                     {% for col in object.column.all %}
-                        <th>{{col.header}}</th>
+                        <th onclick="myFunction()">{{col.header}}</th>
                     {%endfor%}
-                    <th>Overall</th>
+                    <th onclick="myFunction()">Overall</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,11 +41,11 @@
                             {% for po in stu.score.all %}
                                 {% if po.column == col %}
                                     <script>
-                                      weighted({{po.numerator}}, {{po.denominator}}, {{col.weight}});
+                                      weighted({{po.numerator}}, {{col.denominator}}, {{col.weight}});
                                     </script>
-                                    <td class = "Cell" bgcolor="#00CC00">{{po.numerator}}/{{po.denominator}}</td>
+                                    <td class = "Cell" bgcolor="#00CC00">{{po.numerator}}/{{col.denominator}}</td>
                                     <script>
-                                      headFunction({{po.numerator}}, {{po.denominator}});
+                                      headFunction({{po.numerator}}, {{col.denominator}});
                                     </script>
                                 {%endif%}
                             {%endfor%}

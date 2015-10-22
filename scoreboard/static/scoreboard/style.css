@@ -185,7 +185,6 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 	margin-left:200px;
 	margin-top:80px;
 }
-}
 
 .dropdown-menu {
 }
@@ -246,4 +245,9 @@ table#t01 th	{
 
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
     content: " \25B4\25BE" 
+}
+
+#search {
+	margin-top:100px;
+	margin-left:250px;
 }

@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     url(r'^spectator/', views.ScoreboardSpectator.as_view(), name = 'spectator'),
     url(r'^scoreboard/(?P<pk>\d+)/delete$', views.ScoreboardDelete.as_view(), name = 'scoreboard_delete'),
     
-    #url(r'^scoreboard/(?P<pk>\d+)/(?P<anystring>.+)/$', views.ScoreboardDetail.as_view(), name = 'scoreboard_detail_withconditions'),
+    url(r'^search/(?P<anystring>.+)$', views.ScoreboardSearch.as_view(), name = 'scoreboard_search'),
+    url(r'^search/', views.search, name = 'scoreboard_search'),
     
     url(r'^accounts/', include('accounts.urls')),
     

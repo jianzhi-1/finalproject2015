@@ -1,0 +1,22 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+{%load staticfiles%}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    Search
+{%endblock%}
+
+{%block content%}
+    <div id = "search">
+        <h1>Search for a Scoreboard</h1>
+        <br>
+        Name: <input name="searchTxt" type="text" maxlength="512" id="searchTxt" class="searchField"><br>
+        <br>
+        <input type="submit" value="Submit" onclick = "searcher()">
+    </div>
+{%endblock%}

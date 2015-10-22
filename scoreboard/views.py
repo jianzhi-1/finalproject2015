@@ -16,7 +16,7 @@ from django.forms.models import model_to_dict
 
 from .models import Scoreboard, Student, Column, Score
 
-from .forms import ScoreboardForm, StudentForm, ColumnForm, ScoreForm, ScoreboardFormUpdate, StudentFormUpdate
+from .forms import ScoreboardForm, StudentForm, ColumnForm, ScoreForm, ScoreboardFormUpdate, StudentFormUpdate, ColumnFormUpdate
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -52,6 +52,9 @@ def notfound(request):
     
 def credits(request):
     return render(request, 'scoreboard/credits.html')
+    
+def search(request):
+    return render(request, 'scoreboard/scoreboard_search.html')
     
 def people(request, score_id):
     if request.method == 'GET':
@@ -107,6 +110,21 @@ class ScoreboardDetail(DetailView):
         if self.request.user.is_authenticated():
             context['curruser'] = UserProfile.objects.get(user=self.request.user)
         return context
+        
+class ScoreboardSearch(ListView):
+    model = Scoreboard
+    queryset = Scoreboard.objects.all()
+    #@method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ScoreboardSearch, self).dispatch(*args, **kwargs)
+        
+    def get_context_data(self, **kwargs):
+        context = super(ScoreboardSearch, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context['curruser'] = UserProfile.objects.get(anystring = name)
+            
+        return context
+        
         
 class ScoreboardSpectator(ListView):
     model = Scoreboard
@@ -172,7 +190,32 @@ class StudentUpdate(UpdateView):
         context = super(StudentUpdate, self).get_context_data(**kwargs)
         context['curruser'] = UserProfile.objects.get(user=self.request.user)
         return context
+
+class ColumnDetail(DetailView):
+    model = Column
+    #@method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ColumnDetail, self).dispatch(*args, **kwargs)
         
+    def get_context_data(self, **kwargs):
+        context = super(ColumnDetail, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context['curruser'] = UserProfile.objects.get(user=self.request.user)
+        return context
+
+class ColumnUpdate(UpdateView):
+    model = Column
+    form_class = ColumnFormUpdate
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ColumnUpdate, self).dispatch(*args, **kwargs)
+        
+    def get_context_data(self, **kwargs):
+        context = super(ColumnUpdate, self).get_context_data(**kwargs)
+        context['curruser'] = UserProfile.objects.get(user=self.request.user)
+        return context
+
 class MyView(TemplateView):
 
     student_form_class = StudentForm
@@ -202,18 +245,8 @@ class MyView(TemplateView):
         }
         
         print request.POST['form']
-        
-        if "btn_createscore" in request.POST['form']: 
-            form = self.score_form_class(**form_args)
-            if not form.is_valid():
-                return self.get(request, createscore_form=form)
-                
-            else:
-                form.save() 
-                data = Score.objects.all() 
-                result_list = list(data.values('id','numerator','denominator','column'))
-                return HttpResponse(json.dumps(result_list, cls=DjangoJSONEncoder))
-        elif "btn_createscoreboard" in request.POST['form']:
+        print ("btn_createscoreboard" in request.POST['form'])        
+        if "btn_createscoreboard" in request.POST['form']:
             print "i am in"
             form = self.scoreboard_form_class(**form_args)
             if not form.is_valid():
@@ -231,6 +264,16 @@ class MyView(TemplateView):
                     print("errors" + str(e))
                 response = {'status': 1, 'message':'ok'}
                 return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder)) #return to ajax as success with all the new records.
+        elif "btn_createscore" in request.POST['form']: 
+            form = self.score_form_class(**form_args)
+            if not form.is_valid():
+                return self.get(request, createscore_form=form)
+                
+            else:
+                form.save() 
+                data = Score.objects.all() 
+                result_list = list(data.values('id','numerator','column'))
+                return HttpResponse(json.dumps(result_list, cls=DjangoJSONEncoder))
         elif "btn_createstudent" in request.POST['form']:
             print "jjj"
             form = self.student_form_class(**form_args)

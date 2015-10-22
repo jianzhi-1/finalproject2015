@@ -10,6 +10,7 @@ class Column(models.Model):
     color = models.CharField(max_length=50, default = "yellow")
     fontcolor = models.CharField(max_length=50, default = "black")
     weight = models.FloatField(null = True, blank = True)
+    denominator = models.IntegerField()
     
     def __unicode__(self):
         return self.header
@@ -34,11 +35,10 @@ class Scoreboard(models.Model):
 class Score(models.Model):
     
     numerator = models.IntegerField()
-    denominator = models.IntegerField()
     column = models.ForeignKey(Column, blank=True, null=True)
     
     def __unicode__(self):
-        return str(self.numerator) + "/" + str(self.denominator) + " " +  str(self.column.header)
+        return str(self.numerator)
 
 
 class Student(models.Model):
