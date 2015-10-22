@@ -28,9 +28,8 @@ urlpatterns = patterns('',
     
     url(r'^add/$', views.MyView.as_view(), name = "scoreboard_add"),
     
-    
-    url(r'^notfound/', views.notfound, name = 'notfound'),
     url(r'^people/(?P<score_id>[\w{}.-]{1,40})/$', views.people, name = 'people'),
+    url(r'^credits/$', views.credits, name = 'credits'),
 
 
     
@@ -42,3 +41,4 @@ urlpatterns += patterns(
     'serve',
     {'document_root': settings.MEDIA_ROOT}),
 )
+handler404 = views.notfound

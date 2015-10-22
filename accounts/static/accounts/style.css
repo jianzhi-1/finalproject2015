@@ -160,6 +160,10 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 	margin-left:10px;
 }
 
+#credits {
+	margin-left:20px;
+}
+
 .pointer {
 	height:20px;
 	width:20px;

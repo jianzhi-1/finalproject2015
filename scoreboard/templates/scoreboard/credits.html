@@ -1,0 +1,23 @@
+{%extends 'scoreboard/base.html'%}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{%block title%}
+    Credits
+{%endblock%}
+
+{%block content%}
+<!-- Introduction -->
+<div id = "welcome-slide">
+    <div class="page-header"><h1>Credits</h1></div>
+    <p>Score is proudly created and maintained by Bryan Yang and Wang Jianzhi (2015)</p>
+    <p>We will constantly upgrade the website to make it better :)</p>
+    <br>
+    <p style = "color:red">Keep on being competitive!</p>
+    <img src = "/media/images/sjq.jpg">
+</div>
+{%endblock%}

@@ -15,12 +15,12 @@ class ScoreboardForm(forms.ModelForm):
         #self.helper.add_input(Submit('submit', 'Submit'))
         
         student = Div('student', css_class="col-xs-12", style = "padding:0px;")
-        self.helper.layout.pop(5)
-        self.helper.layout.insert(5,Fieldset("Select Students",student, Button("createstudentmodal", value="Add a Student", css_class="btn btn-primary btn-sm col-xs-12 ", data_toggle="modal", data_target="#myModal")))
+        self.helper.layout.pop(4)
+        self.helper.layout.insert(4,Fieldset("Select Students",student, Button("createstudentmodal", value="Add a Student", css_class="btn btn-primary btn-sm col-xs-12 ", data_toggle="modal", data_target="#myModal")))
         
         column = Div('column',css_class = "col-xs-12", style="padding:0px;") 
-        self.helper.layout.pop(6)
-        self.helper.layout.insert(6, Fieldset("Select Column",column, Button("createcolumnmodal", value="Create New Column", css_class="btn btn-primary btn-sm col-xs-12", data_toggle="modal", data_target="#myModal2")))
+        self.helper.layout.pop(5)
+        self.helper.layout.insert(5, Fieldset("Select Column",column, Button("createcolumnmodal", value="Create New Column", css_class="btn btn-primary btn-sm col-xs-12", data_toggle="modal", data_target="#myModal2")))
         
         self.helper.layout.append(Button('btn_createscoreboard', 'Create Scoreboard', css_class='createscoreboard', style="margin-top:15px;"))
         self.helper.layout.append(Hidden(name='btn_createscoreboard', value="btn_createscoreboard"))
@@ -90,6 +90,14 @@ class ScoreboardFormUpdate(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_id = "scoreboardformupdate"
         
+        student = Div('student', css_class="col-xs-12", style = "padding:0px;")
+        self.helper.layout.pop(4)
+        self.helper.layout.insert(4,Fieldset("Select Students",student, Button("createstudentmodal", value="Add a Student", css_class="btn btn-primary btn-sm col-xs-12 ", data_toggle="modal", data_target="#myModal")))
+        
+        column = Div('column',css_class = "col-xs-12", style="padding:0px;") 
+        self.helper.layout.pop(5)
+        self.helper.layout.insert(5, Fieldset("Select Column",column, Button("createcolumnmodal", value="Create New Column", css_class="btn btn-primary btn-sm col-xs-12", data_toggle="modal", data_target="#myModal2")))
+        
         self.helper.add_input(Submit('submit', 'Update'))
 
 class StudentFormUpdate(forms.ModelForm):
@@ -101,4 +109,7 @@ class StudentFormUpdate(forms.ModelForm):
         super(StudentFormUpdate, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_id = "studentformupdate"
+        score = Div('score',css_class = "col-xs-12", style="padding:0px;") 
+        self.helper.layout.pop(1)
+        self.helper.layout.insert(1, Fieldset("Select Score",score, Button("createscoremodal", value="Add a New Score", css_class="btn btn-primary btn-sm col-xs-12", data_toggle="modal", data_target="#myModal")))
         self.helper.add_input(Submit('submit', 'Update'))        

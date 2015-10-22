@@ -1,9 +1,19 @@
-@import url(http://fonts.googleapis.com/css?family=Gloria+Hallelujah);
+@import url(https://fonts.googleapis.com/css?family=Gloria+Hallelujah);
 * { box-sizing:border-box; }
 body { background:url(media/little_pluses.png) #cacaca; margin:30px; }
 
 .main {
   padding-top: 60px;
+}
+
+p {
+  font-family: "montserrat";
+  font-size: 20px;
+}
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 }
 
 .postit  { 
@@ -29,7 +39,7 @@ body { background:url(media/little_pluses.png) #cacaca; margin:30px; }
 	font-smoothing:subpixel-antialiased;
 	min-width:30px;
 	/*max-width:520px;*/
-	max-height:250px;
+	max-height:500px;
 }
 
 a:link{
@@ -192,7 +202,7 @@ textbox:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 
 #editdelete {
 	position: absolute;
-	top:16%;
+	top:11%;
 	left:82%;
 }
 

@@ -17,7 +17,6 @@ class Column(models.Model):
 class Scoreboard(models.Model):
     user = models.ForeignKey(UserProfile, blank=True, null=True)
     name = models.CharField(max_length = 255)
-    sid = models.CharField(max_length = 255)
     description = models.TextField()
     color = models.CharField(max_length=50, default = "yellow")
     fontcolor = models.CharField(max_length=50, default = "black")
@@ -49,3 +48,6 @@ class Student(models.Model):
     
     def __unicode__(self):
         return self.name
+        
+    def get_absolute_url(self):
+        return reverse("student_detail", kwargs={"pk":self.pk})

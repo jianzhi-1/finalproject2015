@@ -12,18 +12,47 @@
                     <u>{{scoreboard.name}}</u>
                     <br>
                     <br>
-                    <table style = "width:30%">
+                    <table id = "t01" style="width:100%">
                         <thead>
                             <tr>
-                                <td><b>Contestants</b></td>
+                                <th>Ranking</th>
+                                <th>Contestant</th>
+                                {% for col in scoreboard.column.all %}
+                                    <th>{{col.header}}</th>
+                                {%endfor%}
+                                <th>Overall</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for i in scoreboard.student.all %}
+                            {%for stu in scoreboard.student.all%}
                                 <tr>
-                                    <td>{{i.name}}</td>
+                                    <td class = "Rank">1</td>
+                                    <td><a href="/participants/{{stu.id}}">{{stu.name}}</a></td>
+                                    <script>
+                                      weighted(-1, -1, -1);
+                                    </script>
+                                    {% for col in scoreboard.column.all %}
+                                        {% for po in stu.score.all %}
+                                            {% if po.column == col %}
+                                                <script>
+                                                  weighted({{po.numerator}}, {{po.denominator}}, {{col.weight}});
+                                                </script>
+                                                <td class = "Cell" bgcolor="#00CC00">{{po.numerator}}/{{po.denominator}}</td>
+                                                <script>
+                                                  headFunction({{po.numerator}}, {{po.denominator}});
+                                                </script>
+                                            {%endif%}
+                                        {%endfor%}
+                                    {%endfor%}
+                                    <td class = "weight"></td>
+                                    <script>
+                                      weighted(-2, -2, -2);
+                                    </script>
                                 </tr>
-                            {% endfor %}
+                            {%endfor%}
+                            <script>
+                              reset();
+                            </script>
                         </tbody>
                     </table>
                     <br>

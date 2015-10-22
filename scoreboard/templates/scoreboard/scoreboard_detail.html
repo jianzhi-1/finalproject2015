@@ -23,7 +23,7 @@
         <table class = "sortable" id = "t01" style="width:100%">
             <thead>
                 <tr>
-                    <th>Ranking</th>
+                    <th class="sorttable_nosort">Ranking</th>
                     <th>Contestant</th>
                     {% for col in object.column.all %}
                         <th>{{col.header}}</th>
@@ -35,7 +35,7 @@
                 {%for stu in object.student.all%}
                     <tr>
                         <td class = "Rank">1</td>
-                        <td>{{stu.name}}</td>
+                        <td><a href="/participants/{{stu.id}}">{{stu.name}}</a></td>
                         <script>
                           weighted(-1, -1, -1);
                         </script>
@@ -62,19 +62,11 @@
         </table> 
         <br>
         <br>
-        <!--
-        <h4>Ranking Method</h4>
-        
-        <form id='formName' name='formName' onsubmit= 'redirect({{object.id}}); return false;'>
-            <input type='text' id='userInput' name='userInput' value=''>
-                <input type='submit' name='submit' value='Submit'>
-        </form>
-        -->
         
         <h4>All participants:</h4>
         <ul>
             {%for stu in object.student.all%}
-                <li>{{stu.name}}</li>
+                <li><a href="/participants/{{stu.id}}">{{stu.name}}</a></li>
             {%endfor%}
         </ul>
         
