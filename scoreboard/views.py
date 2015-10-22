@@ -115,14 +115,23 @@ class ScoreboardSearch(ListView):
     model = Scoreboard
     queryset = Scoreboard.objects.all()
     #@method_decorator(login_required)
+    def get_queryset(self):
+        sb = self.kwargs['anystring']
+        if sb == '':
+            #filter based on current logged in user
+            self.queryset = Scoreboard.objects.all()
+            return self.queryset
+        else:
+            #filter based on current logged in user
+            self.queryset = Scoreboard.objects.all().filter(name__iexact=sb)
+            return self.queryset
+
     def dispatch(self, *args, **kwargs):
         return super(ScoreboardSearch, self).dispatch(*args, **kwargs)
         
     def get_context_data(self, **kwargs):
         context = super(ScoreboardSearch, self).get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
-            context['curruser'] = UserProfile.objects.get(anystring = name)
-            
+        context['total'] = self.queryset.count()
         return context
         
         

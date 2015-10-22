@@ -21,7 +21,7 @@
         <table class = "sortable" id = "t01" style="width:100%">
             <thead onclick="myFunction()">
                 <tr onclick="myFunction()">
-                    <th onclick="myFunction()">Ranking</th>
+                    <th class="sorttable_nosort" onclick="myFunction()">Ranking</th>
                     <th onclick="myFunction()">Contestant</th>
                     {% for col in object.column.all %}
                         <th onclick="myFunction()">{{col.header}}</th>

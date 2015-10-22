@@ -222,7 +222,7 @@
                     var $el = $("#id_score");
                     $el.empty(); // remove old options
                     $.each(data, function(key, value) {
-                        $el.append($("<option></option>").attr("value", value.id).text(value.numerator + " " + value.column));
+                        $el.append($("<option></option>").attr("value", value.id).text(value.column + ": " + value.numerator));
                     });
                     // $el.append($("<option></option>").attr("value", "").text("---------"));
                     // $.each(data, function(key, value) {

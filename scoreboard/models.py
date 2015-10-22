@@ -17,6 +17,7 @@ class Column(models.Model):
 
 class Scoreboard(models.Model):
     user = models.ForeignKey(UserProfile, blank=True, null=True)
+    sid = models.IntegerField()
     name = models.CharField(max_length = 255)
     description = models.TextField()
     color = models.CharField(max_length=50, default = "yellow")
@@ -38,7 +39,7 @@ class Score(models.Model):
     column = models.ForeignKey(Column, blank=True, null=True)
     
     def __unicode__(self):
-        return str(self.numerator)
+        return self.column.header + ": " + str(self.numerator)
 
 
 class Student(models.Model):
