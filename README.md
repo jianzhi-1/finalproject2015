@@ -6,6 +6,12 @@
      `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
     ----------------------------------------------------------------- 
 
+The creators of Score! (Bryan Yang and Wang Jianzhi) would like to thank our CEP teacher Mrs Neo for her
+guidance and support throughout the project. We would also like to thank http://www.kryogenix.org/code/browser/sorttable/
+for providing us the free sorttable.js javascript which enables us to sort our HTML tables.Starting from the Terminal
+
+Thank you all and we will continue to update this project :)
+-Bryan and Jianzhi [2015]
 
 Welcome to your Django project on Cloud9 IDE!
 
